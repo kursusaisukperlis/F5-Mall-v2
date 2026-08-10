@@ -1,0 +1,6 @@
+{
+  "name": "F5 MALL - Pusat Jual Beli Warga Jabatan",
+  "description": "Aplikasi mall dalaman jabatan berjenama F5 MALL dengan Content Management System (CMS) berbilang peranan (Admin & Penjual), pengurusan stok & harga pantas, audit pesanan, hebahan pengumuman, pembayaran terus DuitNow QR serta penghantaran ke meja staf.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
