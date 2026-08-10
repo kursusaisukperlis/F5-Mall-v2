@@ -98,11 +98,36 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({
         throw new Error('AI API fallback');
       }
     } catch (err) {
-      // High quality fallback
-      setDescription(
-        `Dihasilkan segar khusus untuk warga ${currentUser.department}! Menggunakan bahan premium, bersih dan dijamin halal. Sedia dihantar terus ke meja/kubikel anda sebelum waktu rehat tengah hari. Tempah awal untuk elak kehabisan stok.`
-      );
-      setTags('Homemade, Segar, Hantar Ke Meja, Halal, DuitNow');
+      // High quality dynamic fallback for static deployment (GitHub Pages / Standalone)
+      let dynamicDesc = '';
+      let dynamicTags = '';
+      let dynamicBadge: 'HOT' | 'FRESH' | 'ORGANIK' | 'HOMEMADE' | 'TERLARIS' = 'HOMEMADE';
+
+      if (category === 'Buah-buahan Segar') {
+        dynamicDesc = `🍓 [SEGAR DARI KEBUN] Dipetik segar khas untuk warga ${currentUser.department}! Buah gred terpilih yang manis, berjus, dan bersih. Sedia dihantar terus ke meja/kubikel anda pada waktu rehat. Sila tempah awal untuk elak kehabisan!`;
+        dynamicTags = 'Segar, BuahKebun, GredSuper, HantarKeMeja, DuitNow';
+        dynamicBadge = 'FRESH';
+      } else if (category === 'Kek & Pastri') {
+        dynamicDesc = `🧁 [HOMEMADE BAKED] Disediakan dengan bahan premium, kurang manis dan lembut gebu. Sangat sesuai untuk kudapan minum petang atau keraian bersama rakan sekerja ${currentUser.department}. Penghantaran pantas ke kubikel anda.`;
+        dynamicTags = 'KekPastri, FreshBaked, Halal, KudapanPejabat, SapotWarga';
+        dynamicBadge = 'HOT';
+      } else if (category === 'Sambal & Lauk Pauk') {
+        dynamicDesc = `🌶️ [RESIPOI ASLI] Dimasak perlahan dengan ramuan segar & pedas menyengat yang membangkitkan selera makan tengah hari warga jabatan. Tahan lama dan sedia dimakan bila-bila masa. Penghantaran ke meja kerja anda sebelum waktu makan tengah hari.`;
+        dynamicTags = 'SambalPadu, LaukPauk, ResipiWarisan, Halal, Homemade';
+        dynamicBadge = 'TERLARIS';
+      } else if (category === 'Kudapan & Minuman') {
+        dynamicDesc = `☕ [KUDAPAN PEJABAT] Pilihan terbaik untuk menemani waktu kerja anda di ${currentUser.department}. Sedap, rangup, dan segar. Jimat masa tanpa perlu keluar pejabat—pesan dan kami hantar terus ke meja anda!`;
+        dynamicTags = 'Kudapan, MinumanSegar, SnekKerja, JimatMasa, DuitNow';
+        dynamicBadge = 'HOT';
+      } else {
+        dynamicDesc = `📦 Dihasilkan & disediakan dengan teliti khas untuk rakan sekerja ${currentUser.department}. Kualiti terjamin, harga mesra warga jabatan, dan penghantaran mudah terus ke meja anda.`;
+        dynamicTags = 'WargaJabatan, KrafPejabat, Halal, SapotKawan, DuitNow';
+        dynamicBadge = 'HOMEMADE';
+      }
+
+      setDescription(dynamicDesc);
+      setTags(dynamicTags);
+      setBadge(dynamicBadge);
       setAiGeneratedSuccess(true);
     } finally {
       setIsGeneratingAi(false);
